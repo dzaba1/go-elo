@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { PlayerRating } from 'src/model/playerRating';
 import { EloService } from 'src/services/elo.service';
 

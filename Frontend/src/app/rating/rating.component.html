@@ -1,4 +1,6 @@
-<table mat-table [dataSource]="dataSource">
+<mat-spinner *ngIf="!isLoaded"></mat-spinner>
+
+<table mat-table [dataSource]="dataSource" *ngIf="isLoaded">
     <ng-container matColumnDef="player">
         <th mat-header-cell *matHeaderCellDef>Player</th>
         <td mat-cell *matCellDef="let element"> {{element.player}} </td>
