@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Match } from 'src/model/match';
 import { EloService } from 'src/services/elo.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { EloService } from 'src/services/elo.service';
 })
 export class MatchesComponent implements OnInit {
   public displayedColumns = [];
+  public dataSource: Match[] = [];
   public isLoaded = false;
 
   constructor(private eloService: EloService) {
@@ -15,6 +17,16 @@ export class MatchesComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
-    this.isLoaded = true;
+    await this.refresh();
+  }
+
+  private async refresh(): Promise<void> {
+    this.isLoaded = false;
+    try {
+      
+    }
+    finally {
+      this.isLoaded = true;
+    }
   }
 }
