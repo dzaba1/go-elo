@@ -1,0 +1,7 @@
+<mat-spinner *ngIf="!isLoaded"></mat-spinner>
+
+<table mat-table [dataSource]="dataSource" *ngIf="isLoaded">
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

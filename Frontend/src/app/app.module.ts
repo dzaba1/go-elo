@@ -9,11 +9,13 @@ import { MatTableModule } from '@angular/material/table';
 import { RatingComponent } from './rating/rating.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { MatchesComponent } from './matches/matches.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RatingComponent
+    RatingComponent,
+    MatchesComponent
   ],
   imports: [
     BrowserModule,
