@@ -22,7 +22,7 @@ func main() {
 	r.DELETE("/match/:id", service.DeleteMatch)
 	r.POST("/match", service.NewMatch)
 	r.GET("/elo", service.Elo)
-	r.POST("/name", service.LeagueName)
+	r.GET("/name", service.LeagueName)
 
 	print("Starting the app.\n")
 	err = r.Run()
