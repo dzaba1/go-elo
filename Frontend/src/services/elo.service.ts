@@ -1,32 +1,33 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Match } from 'src/model/match';
 import { PlayerRating } from 'src/model/playerRating';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EloService {
 
-  constructor() { }
+  private baseUrl = "http://localhost:8080/";
+
+  constructor(private http: HttpClient) {
+  }
 
   public async getLeagueName(): Promise<string> {
-    return Promise.resolve("TODO")
+    const resp = await firstValueFrom(this.http.get<LeagueNameResp>(this.baseUrl + "name"))
+    return resp.name;
   }
 
   public async getRating(): Promise<PlayerRating[]> {
-    const temp1: PlayerRating = {
-      player: "player1",
-      rating: 1010
-    }
-    const temp2: PlayerRating = {
-      player: "player3",
-      rating: 990
-    }
-    
-    return Promise.resolve([temp1, temp2]);
+    return await firstValueFrom(this.http.get<PlayerRating[]>(this.baseUrl + "elo"))
   }
 
   public async addMatch(match: Match): Promise<Match> {
-    return Promise.resolve(match);
+    return await firstValueFrom(this.http.post<Match>(this.baseUrl + "match", match))
   }
+}
+
+interface LeagueNameResp {
+  name: string
 }
