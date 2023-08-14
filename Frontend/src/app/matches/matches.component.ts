@@ -8,7 +8,7 @@ import { EloService } from 'src/services/elo.service';
   styleUrls: ['./matches.component.sass']
 })
 export class MatchesComponent implements OnInit {
-  public displayedColumns = [];
+  public displayedColumns = ["dateTime", "player1", "score", "player2"];
   public dataSource: Match[] = [];
   public isLoaded = false;
   public newDate?: Date;
@@ -26,7 +26,7 @@ export class MatchesComponent implements OnInit {
   private async refresh(): Promise<void> {
     this.isLoaded = false;
     try {
-      
+      this.dataSource = await this.eloService.getMatches();
     }
     finally {
       this.isLoaded = true;
@@ -53,7 +53,7 @@ export class MatchesComponent implements OnInit {
   }
 
   public canAddMatches(): boolean {
-    return this.isLoaded && this.newDate != null && this.newPlayer1.isOk && this.newPlayer2.isOk;
+    return this.isLoaded && this.newDate != null && this.newPlayer1.isOk && this.newPlayer2.isOk && this.newPlayer1.playerName !== this.newPlayer2.playerName;
   }
 }
 
