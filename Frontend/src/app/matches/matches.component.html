@@ -1,11 +1,28 @@
 <form>
     <mat-form-field>
         <mat-label>Date</mat-label>
-        <input matInput [matDatepicker]="picker">
+        <input matInput [matDatepicker]="picker" [(ngModel)]="newDate" name="newDate">
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
+    <mat-form-field>
+        <mat-label>Player 1</mat-label>
+        <input matInput [(ngModel)]="newPlayer1.playerName" name="newPlayer1Name">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Player 1 score</mat-label>
+        <input matInput type="number" [(ngModel)]="newPlayer1.score" name="newPlayer1Score">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Player 2</mat-label>
+        <input matInput [(ngModel)]="newPlayer2.playerName" name="newPlayer2Name">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Player 2 score</mat-label>
+        <input matInput type="number" [(ngModel)]="newPlayer2.score" name="newPlayer2Score">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addMatch()"[disabled]="!canAddMatches()">Add match</button>
 </form>
 
 <mat-spinner *ngIf="!isLoaded"></mat-spinner>

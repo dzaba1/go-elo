@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Match } from 'src/model/match';
 import { PlayerRating } from 'src/model/playerRating';
 
 @Injectable({
@@ -23,5 +24,9 @@ export class EloService {
     }
     
     return Promise.resolve([temp1, temp2]);
+  }
+
+  public async addMatch(match: Match): Promise<Match> {
+    return Promise.resolve(match);
   }
 }
