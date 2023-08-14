@@ -62,7 +62,9 @@ func (s *serviceImpl) GetMatches(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, matches)
+	result := GetValues(matches)
+
+	c.JSON(http.StatusOK, result)
 }
 
 func (s *serviceImpl) DeleteMatch(c *gin.Context) {

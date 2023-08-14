@@ -57,15 +57,7 @@ func getPlayersFromMatches(matches []*Match) []string {
 		}
 	}
 
-	keys := make([]string, len(dict))
-
-	i := 0
-	for k := range dict {
-		keys[i] = k
-		i++
-	}
-
-	return keys
+	return GetKeys(dict)
 }
 
 func (e *eloImpl) initRanking(players []string) map[string]*PlayerRating {
@@ -107,13 +99,7 @@ func (e *eloImpl) CalculateRanking(matches map[int]*Match) []*PlayerRating {
 		rankingDict[match.RightPlayer].Rating = e.CalculateNewRating(rightRating, leftRating, getScoreSign(match.RightPlayerScore, match.LeftPlayerScore))
 	}
 
-	ranking := make([]*PlayerRating, len(rankingDict))
-
-	i := 0
-	for _, v := range rankingDict {
-		ranking[i] = v
-		i++
-	}
+	ranking := GetValues(rankingDict)
 
 	sort.Slice(ranking, func(i, j int) bool {
 		return ranking[i].Rating > ranking[j].Rating

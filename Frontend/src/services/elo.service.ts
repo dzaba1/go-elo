@@ -26,6 +26,10 @@ export class EloService {
   public async addMatch(match: Match): Promise<Match> {
     return await firstValueFrom(this.http.post<Match>(this.baseUrl + "match", match))
   }
+
+  public async getMatches(): Promise<Match[]> {
+    return await firstValueFrom(this.http.get<Match[]>(this.baseUrl + "match"))
+  }
 }
 
 interface LeagueNameResp {

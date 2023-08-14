@@ -141,10 +141,7 @@ func (p *csvMatchesProvider) serializeList(matches []*Match) error {
 }
 
 func (p *csvMatchesProvider) serialize(matches map[int]*Match) error {
-	values := []*Match{}
-	for _, value := range matches {
-		values = append(values, value)
-	}
+	values := GetValues(matches)
 
 	return p.serializeList(values)
 }
