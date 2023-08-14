@@ -22,7 +22,7 @@
         <mat-label>Player 2 score</mat-label>
         <input matInput type="number" [(ngModel)]="newPlayer2.score" name="newPlayer2Score">
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="addMatch()"[disabled]="!canAddMatches()">Add match</button>
+    <button mat-raised-button color="primary" (click)="addMatch()" [disabled]="!canAddMatches()">Add match</button>
 </form>
 
 <mat-spinner *ngIf="!isLoaded"></mat-spinner>
@@ -46,6 +46,15 @@
     <ng-container matColumnDef="player2">
         <th mat-header-cell *matHeaderCellDef>Player 2</th>
         <td mat-cell *matCellDef="let element"> {{element.rightPlayer}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef>Delete</th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-mini-fab color="primary" (click)="deleteMatch(element)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

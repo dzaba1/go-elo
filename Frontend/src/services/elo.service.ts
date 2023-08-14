@@ -30,6 +30,10 @@ export class EloService {
   public async getMatches(): Promise<Match[]> {
     return await firstValueFrom(this.http.get<Match[]>(this.baseUrl + "match"))
   }
+
+  public async deleteMatch(id: number): Promise<void> {
+    await firstValueFrom(this.http.delete(this.baseUrl + `match/${id}`));
+  }
 }
 
 interface LeagueNameResp {

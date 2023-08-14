@@ -8,7 +8,7 @@ import { EloService } from 'src/services/elo.service';
   styleUrls: ['./matches.component.sass']
 })
 export class MatchesComponent implements OnInit {
-  public displayedColumns = ["dateTime", "player1", "score", "player2"];
+  public displayedColumns = ["dateTime", "player1", "score", "player2", "delete"];
   public dataSource: Match[] = [];
   public isLoaded = false;
   public newDate?: Date;
@@ -54,6 +54,12 @@ export class MatchesComponent implements OnInit {
 
   public canAddMatches(): boolean {
     return this.isLoaded && this.newDate != null && this.newPlayer1.isOk && this.newPlayer2.isOk && this.newPlayer1.playerName !== this.newPlayer2.playerName;
+  }
+
+  public async deleteMatch(match: Match): Promise<void> {
+    this.isLoaded = false;
+    await this.eloService.deleteMatch(match.id!);
+    await this.refresh();
   }
 }
 
