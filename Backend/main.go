@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,6 +18,8 @@ func main() {
 	service := NewService(elo, matchesProvider)
 
 	r := gin.Default()
+	r.Use(cors.Default())
+
 	r.GET("/ping", service.Ping)
 	r.GET("/match", service.GetMatches)
 	r.DELETE("/match/:id", service.DeleteMatch)
