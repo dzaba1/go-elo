@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Match } from 'src/model/match';
-import { PlayerRating } from 'src/model/playerRating';
+import { Match } from '../model/match';
+import { PlayerRating } from '../model/playerRating';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({

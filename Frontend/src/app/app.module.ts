@@ -18,12 +18,15 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MessageBoxComponent } from './message-box/message-box.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     RatingComponent,
-    MatchesComponent
+    MatchesComponent,
+    MessageBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     MatNativeDateModule,
     HttpClientModule,
     MatIconModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

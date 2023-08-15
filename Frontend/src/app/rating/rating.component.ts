@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PlayerRating } from 'src/model/playerRating';
-import { EloService } from 'src/services/elo.service';
+import { PlayerRating } from '../../model/playerRating';
+import { EloService } from '../../services/elo.service';
 
 @Component({
   selector: 'app-rating',

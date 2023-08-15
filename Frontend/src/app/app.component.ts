@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from "@angular/platform-browser";
-import { EloService } from 'src/services/elo.service';
+import { EloService } from '../services/elo.service';
 
 @Component({
   selector: 'app-root',

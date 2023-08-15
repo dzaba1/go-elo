@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DateTime } from 'luxon';
-import { Match } from 'src/model/match';
-import { EloService } from 'src/services/elo.service';
+import { Match } from '../../model/match';
+import { EloService } from '../../services/elo.service';
+import { MessageBoxService } from '../../services/message-box.service';
 
 @Component({
   selector: 'app-matches',
@@ -17,7 +18,8 @@ export class MatchesComponent implements OnInit {
   public newPlayer1 = new PlayerScoreViewModel();
   public newPlayer2 = new PlayerScoreViewModel();
 
-  constructor(private eloService: EloService) {
+  constructor(private eloService: EloService,
+    private messageBoxService: MessageBoxService) {
 
   }
 
@@ -71,9 +73,11 @@ export class MatchesComponent implements OnInit {
   }
 
   public async deleteMatch(match: Match): Promise<void> {
-    this.isLoaded = false;
-    await this.eloService.deleteMatch(match.id!);
-    await this.refresh();
+    if (await this.messageBoxService.showYesNoQuestion("Question", "Do you want to delete this match?")) {
+      this.isLoaded = false;
+      await this.eloService.deleteMatch(match.id!);
+      await this.refresh();
+    }
   }
 }
 
