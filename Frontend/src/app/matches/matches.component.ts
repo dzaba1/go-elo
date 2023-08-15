@@ -30,7 +30,17 @@ export class MatchesComponent implements OnInit {
   private async refresh(): Promise<void> {
     this.isLoaded = false;
     try {
-      this.dataSource = await this.eloService.getMatches();
+      const matches = await this.eloService.getMatches();
+      this.dataSource = matches.sort((a, b) => {
+        if (a.dateTime > b.dateTime) {
+          return 1;
+        }
+        else if (a.dateTime === b.dateTime) {
+          return 0;
+        }
+
+        return -1;
+      })
     }
     finally {
       this.isLoaded = true;
