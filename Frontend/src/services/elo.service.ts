@@ -4,12 +4,14 @@ import { Match } from '../model/match';
 import { PlayerRating } from '../model/playerRating';
 import { firstValueFrom } from 'rxjs';
 
+declare var myGlobalEnv: any;
+
 @Injectable({
   providedIn: 'root'
 })
 export class EloService {
 
-  private baseUrl = "http://localhost:8080/";
+  private baseUrl: string = myGlobalEnv.apiUrl;
 
   constructor(private http: HttpClient) {
   }
