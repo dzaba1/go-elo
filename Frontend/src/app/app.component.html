@@ -1,7 +1,9 @@
 <mat-toolbar color="primary">
   <span>{{title}}</span>
-  <a mat-button routerLink="/rating">Rating</a>
+  <a mat-button routerLink="/rating" class="mx-3">Rating</a>
   <a mat-button routerLink="/matches">Matches</a>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<div class="container mt-3">
+  <router-outlet></router-outlet>
+</div>
