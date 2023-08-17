@@ -5,12 +5,12 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
 type Service interface {
-	Ping(c *gin.Context)
 	Elo(c *gin.Context)
 	GetMatches(c *gin.Context)
 	DeleteMatch(c *gin.Context)
@@ -30,10 +30,9 @@ func NewService(elo Elo, matchesProvider MatchesProvider) Service {
 	}
 }
 
-func (s *serviceImpl) Ping(c *gin.Context) {
-	log.Println("Ping")
-	c.JSON(http.StatusOK, gin.H{
-		"message": "pong",
+func setErrorResp(c *gin.Context, code int, msg string) {
+	c.JSON(code, gin.H{
+		"error": msg,
 	})
 }
 
@@ -41,9 +40,7 @@ func (s *serviceImpl) Elo(c *gin.Context) {
 	log.Println("Elo")
 	matches, err := s.matchesProvider.GetMatches()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
+		setErrorResp(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -56,9 +53,7 @@ func (s *serviceImpl) GetMatches(c *gin.Context) {
 	log.Println("Get matches")
 	matches, err := s.matchesProvider.GetMatches()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
+		setErrorResp(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -72,21 +67,39 @@ func (s *serviceImpl) DeleteMatch(c *gin.Context) {
 	idVal := c.Params.ByName("id")
 	id, err := strconv.Atoi(idVal)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		setErrorResp(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	err = s.matchesProvider.DeleteMatch(id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
+		setErrorResp(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	c.Status(http.StatusOK)
+}
+
+func validateNewMatch(match *Match) *string {
+	leftP := strings.TrimSpace(match.LeftPlayer)
+	rightP := strings.TrimSpace(match.RightPlayer)
+
+	if leftP == "" {
+		msg := "Left player name is required"
+		return &msg
+	}
+
+	if rightP == "" {
+		msg := "Right player name is required"
+		return &msg
+	}
+
+	if rightP == leftP {
+		msg := "Players must be different"
+		return &msg
+	}
+
+	return nil
 }
 
 func (s *serviceImpl) NewMatch(c *gin.Context) {
@@ -95,17 +108,19 @@ func (s *serviceImpl) NewMatch(c *gin.Context) {
 
 	err := c.BindJSON(&newMatch)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		setErrorResp(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	validationMsg := validateNewMatch(&newMatch)
+	if validationMsg != nil {
+		setErrorResp(c, http.StatusBadRequest, *validationMsg)
 		return
 	}
 
 	_, err = s.matchesProvider.AddMatch(&newMatch)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
+		setErrorResp(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 

@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -66,8 +67,8 @@ func serializeRecord(match *Match) []string {
 
 	data[0] = strconv.Itoa(*match.Id)
 	data[1] = match.DateTime.Format(DateTimeLayout)
-	data[2] = match.LeftPlayer
-	data[3] = match.RightPlayer
+	data[2] = strings.TrimSpace(match.LeftPlayer)
+	data[3] = strings.TrimSpace(match.RightPlayer)
 	data[4] = strconv.Itoa(match.LeftPlayerScore)
 	data[5] = strconv.Itoa(match.RightPlayerScore)
 

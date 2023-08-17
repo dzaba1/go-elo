@@ -20,7 +20,6 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.Default())
 
-	r.GET("/ping", service.Ping)
 	r.GET("/match", service.GetMatches)
 	r.DELETE("/match/:id", service.DeleteMatch)
 	r.POST("/match", service.NewMatch)

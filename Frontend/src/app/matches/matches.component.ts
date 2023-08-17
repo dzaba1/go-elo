@@ -78,8 +78,17 @@ export class MatchesComponent implements OnInit {
     this.newPlayer2 = new PlayerScoreViewModel();
   }
 
+  public invalidDate(): boolean {
+    return this.newDate == null;
+  }
+
+  public invalidTime(): boolean {
+    return this.newTime == null || this.newTime.trim() === "";
+  }
+
   public canAddMatches(): boolean {
-    return this.isLoaded && this.newDate != null && this.newPlayer1.isOk && this.newPlayer2.isOk && this.newPlayer1.playerName !== this.newPlayer2.playerName && this.newTime != null;
+    console.log(`${this.isLoaded} && ${!this.invalidDate()} && ${!this.invalidTime()} && ${this.newPlayer1.isOk} && ${this.newPlayer2.isOk} && ${!this.arePlayersTheSame()}`);
+    return this.isLoaded && !this.invalidDate() && !this.invalidTime() && this.newPlayer1.isOk && this.newPlayer2.isOk && !this.arePlayersTheSame();
   }
 
   public async deleteMatch(match: Match): Promise<void> {
@@ -89,13 +98,29 @@ export class MatchesComponent implements OnInit {
       await this.refresh();
     }
   }
+
+  public arePlayersTheSame(): boolean {
+    if (this.newPlayer1.isPlayerNameEmpty || this.newPlayer2.isPlayerNameEmpty){
+      return false;
+    }
+
+    return this.newPlayer1.playerName!.trim() === this.newPlayer2.playerName!.trim();
+  }
 }
 
 class PlayerScoreViewModel {
   public playerName?: string;
   public score?: number;
 
+  public get isPlayerNameEmpty(): boolean {
+    return this.playerName == null || this.playerName.trim() === "";
+  }
+
+  public get isScoreEmpty(): boolean {
+    return this.score == null;
+  }
+
   public get isOk(): boolean {
-    return this.playerName != null && this.score != null;
+    return !this.isPlayerNameEmpty && !this.isScoreEmpty;
   }
 }
