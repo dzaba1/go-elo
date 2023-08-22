@@ -87,7 +87,6 @@ export class MatchesComponent implements OnInit {
   }
 
   public canAddMatches(): boolean {
-    console.log(`${this.isLoaded} && ${!this.invalidDate()} && ${!this.invalidTime()} && ${this.newPlayer1.isOk} && ${this.newPlayer2.isOk} && ${!this.arePlayersTheSame()}`);
     return this.isLoaded && !this.invalidDate() && !this.invalidTime() && this.newPlayer1.isOk && this.newPlayer2.isOk && !this.arePlayersTheSame();
   }
 
