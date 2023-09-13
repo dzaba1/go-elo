@@ -1,0 +1,19 @@
+services:
+  backend:
+    image: dzaba/go-elo
+    container_name: go-elo-container
+    environment:
+      - PORT=8080
+      - ELO_KFACTOR=32
+      - ELO_INIT_RATING=1000
+      - ELO_LEAGUE_NAME=My League
+    ports:
+      - 8080:8080
+
+  frontend:
+    image: dzaba/go-elo-ui
+    container_name: go-elo-ui-container
+    environment:
+      - API_URL=http://localhost:8080/
+    ports:
+      - 8081:80
